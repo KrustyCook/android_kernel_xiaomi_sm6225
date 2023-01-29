@@ -183,7 +183,7 @@ source "drivers/input/touchscreen/synaptics_tcm/Kconfig"
  * Gesture function enable
  * default: disable
  */
-#define FTS_GESTURE_EN	0
+#define FTS_GESTURE_EN	1
 
 /*
  * ESD check & protection
