@@ -3304,7 +3304,7 @@ static int sm_fg_probe(struct i2c_client *client, const struct i2c_device_id *id
 
 	if (!hal_fg_init(client)) {
 		pr_err("Failed to Initialize Fuelgauge\n");
-		ret = -ENODEV;
+		ret = -EIO;
 		goto err_free;
 	}
 
