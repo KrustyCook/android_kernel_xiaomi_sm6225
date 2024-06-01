@@ -7,13 +7,13 @@
 
 enum bq2589x_vbus_type {
 	BQ2589X_VBUS_NONE,
-	BQ2589X_VBUS_USB_SDP,//5V/500MA
-	BQ2589X_VBUS_USB_CDP, /*CDP for bq25890, Adapter for bq25892*///5V/1A
-	BQ2589X_VBUS_USB_DCP,//5V/2A
-	BQ2589X_VBUS_MAXC,//HVDCP	9V/1A
-	BQ2589X_VBUS_UNKNOWN,//5V/500MA
-	BQ2589X_VBUS_NONSTAND,//float 5V/1A
-	BQ2589X_VBUS_OTG,//5V/
+	BQ2589X_VBUS_USB_SDP, // 5V/500MA
+	BQ2589X_VBUS_USB_CDP, // CDP for bq25890, Adapter for bq25892 // 5V/1A
+	BQ2589X_VBUS_USB_DCP, // 5V/2A
+	BQ2589X_VBUS_MAXC, // HVDCP // 9V/1A
+	BQ2589X_VBUS_UNKNOWN, // 5V/500MA
+	BQ2589X_VBUS_NONSTAND, // float // 5V/1A
+	BQ2589X_VBUS_OTG, // 5V
 	BQ2589X_VBUS_TYPE_NUM,
 };
 
@@ -27,8 +27,8 @@ enum bq2589x_part_no {
 
 
 #define BQ2589X_STATUS_PLUGIN		0x0001
-#define BQ2589X_STATUS_PG			0x0002
-#define	BQ2589X_STATUS_CHARGE_ENABLE 0x0004
+#define BQ2589X_STATUS_PG		0x0002
+#define	BQ2589X_STATUS_CHARGE_ENABLE	0x0004
 #define BQ2589X_STATUS_FAULT		0x0008
 
 #define BQ2589X_STATUS_EXIST		0x0100
@@ -62,76 +62,75 @@ struct adapter_power_cap {
 
 struct bq2589x_config {
 	bool	enable_auto_dpdm;
-/*	bool	enable_12v;*/
+	/*bool	enable_12v;*/
 
-	int		charge_voltage;
-	int		charge_current;
-	int		charge_current_3500;
-	int		charge_current_1500;
-	int		charge_current_1000;
-	int		charge_current_500;
-	int		input_current_2000;
+	int	charge_voltage;
+	int	charge_current;
+	int	charge_current_3500;
+	int	charge_current_1500;
+	int	charge_current_1000;
+	int	charge_current_500;
+	int	input_current_2000;
 
 	bool	enable_term;
-	int		term_current;
+	int	term_current;
 
-	bool 	enable_ico;
+	bool	enable_ico;
 	bool	use_absolute_vindpm;
 };
 
-
 struct bq2589x {
-	struct device *dev;
-	struct i2c_client *client;
-	enum   bq2589x_part_no part_no;
+	struct	device *dev;
+	struct	i2c_client *client;
+	enum	bq2589x_part_no part_no;
 
-	struct tcpc_device *tcpc_dev;
-	struct notifier_block pd_nb;
+	struct	tcpc_device *tcpc_dev;
+	struct	notifier_block pd_nb;
 
-	int    revision;
-	unsigned int    status;
+	int		revision;
+	unsigned int	status;
 	int		vbus_type;
 	int		vbus_volt;
 	int		vbat_volt;
 	int		chg_current;
 	int		rsoc;
-	int pd_active;
-	bool	enabled;
+	int		pd_active;
+	bool		enabled;
 
-	struct mutex i2c_rw_lock;
-	struct mutex usb_switch_lock;
+	struct	mutex i2c_rw_lock;
+	struct	mutex usb_switch_lock;
 
-	struct	bq2589x_config	cfg;
-	struct work_struct irq_work;
-	struct work_struct adapter_in_work;
-	struct work_struct adapter_out_work;
-	struct work_struct start_charging_work;
-	struct delayed_work monitor_work;
-	struct delayed_work ico_work;
-	struct delayed_work charger_work;
-	struct delayed_work pe_volt_tune_work;
-	struct delayed_work check_pe_tuneup_work;
-	struct delayed_work time_delay_work;
-	struct delayed_work usb_changed_work;
-	//struct delayed_work period_work;
+	struct bq2589x_config	cfg;
+	struct work_struct	irq_work;
+	struct work_struct	adapter_in_work;
+	struct work_struct	adapter_out_work;
+	struct work_struct	start_charging_work;
+	struct delayed_work	monitor_work;
+	struct delayed_work	ico_work;
+	struct delayed_work	charger_work;
+	struct delayed_work	pe_volt_tune_work;
+	struct delayed_work	check_pe_tuneup_work;
+	struct delayed_work	time_delay_work;
+	struct delayed_work	usb_changed_work;
+	// struct delayed_work	period_work;
 
-	struct power_supply_desc usb;
-	struct power_supply_desc wall;
-	struct power_supply *batt_psy;
-	struct power_supply *usb_psy;
-	struct power_supply *wall_psy;
-	struct power_supply *bms_psy;
-	struct power_supply_config usb_cfg;
-	struct power_supply_config wall_cfg;
+	struct power_supply_desc	usb;
+	struct power_supply_desc	wall;
+	struct power_supply		*batt_psy;
+	struct power_supply		*usb_psy;
+	struct power_supply		*wall_psy;
+	struct power_supply		*bms_psy;
+	struct power_supply_config	usb_cfg;
+	struct power_supply_config	wall_cfg;
 
-	struct votable		*fcc_votable;
-	struct votable		*fv_votable;
-	struct votable		*usb_icl_votable;
-	struct votable		*chg_dis_votable;
-        //struct votable		*chgctrl_votable;
+	struct votable	*fcc_votable;
+	struct votable	*fv_votable;
+	struct votable	*usb_icl_votable;
+	struct votable	*chg_dis_votable;
+	// struct votable	*chgctrl_votable;
 
-	enum power_supply_type chg_type;
-	bool chg_online; 
+	enum power_supply_type	chg_type;
+	bool chg_online;
 
 	int irq_gpio;
 	int usb_switch1;
@@ -139,16 +138,16 @@ struct bq2589x {
 };
 
 struct pe_ctrl {
-	bool enable;
-	bool tune_up_volt;
-	bool tune_down_volt;
-	bool tune_done;
-	bool tune_fail;
-	int  tune_count;
-	int  target_volt;
-	int	 high_volt_level;/* vbus volt > this threshold means tune up successfully */
-	int  low_volt_level; /* vbus volt < this threshold means tune down successfully */
-	int  vbat_min_volt;  /* to tune up voltage only when vbat > this threshold */
+	bool	enable;
+	bool	tune_up_volt;
+	bool	tune_down_volt;
+	bool	tune_done;
+	bool	tune_fail;
+	int	tune_count;
+	int	target_volt;
+	int	high_volt_level; /* vbus volt > this threshold means tune up successfully */
+	int	low_volt_level; /* vbus volt < this threshold means tune down successfully */
+	int	vbat_min_volt; /* to tune up voltage only when vbat > this threshold */
 };
 
 extern int main_set_hiz_mode(bool en);
@@ -157,5 +156,3 @@ extern int main_set_input_current_limit(int curr);
 extern int main_set_charge_current(int curr);
 extern int main_get_charge_type(void);
 #endif
-
-
